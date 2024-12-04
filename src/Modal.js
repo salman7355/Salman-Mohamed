@@ -84,7 +84,6 @@ export function setupModal() {
         const index = event.currentTarget.dataset.index;
         const product = products[index];
 
-        // Populate modal
         document.getElementById("modal-image").src = product.image;
         document.querySelector(".modal-title").textContent = product.title;
         document.querySelector(".modal-description").textContent =

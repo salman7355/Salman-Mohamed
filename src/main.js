@@ -1,7 +1,6 @@
 import "./style.css";
 import arrow from "../public/arrow.png";
 import whiteArrow from "../public/whiteArrow.png";
-import viteLogo from "/vite.svg";
 import img1 from "../public/img1.png";
 import img2 from "../public/img2.png";
 import img3 from "../public/img3.png";
@@ -11,28 +10,40 @@ import img6 from "../public/img6.png";
 import icons1 from "../public/icons.png";
 import mobileImage from "../public/mobile-Frame.png";
 import icons2 from "../public/icons2.png";
-import add from "../public/add.png";
-import { setupCounter } from "./counter.js";
 import { setupModal } from "./Modal.js";
 
 document.querySelector("#app").innerHTML = `
   <div class="container">
     <!-- BANNER -->
     <div class="banner">
-      <!-- MENU ICON FOR MOBILE -->
-      <nav class="navbar">
-      <button class="navbar-toggle" aria-label="Toggle menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-    <p class="navbar-brand">tisso vison</p>
-    <p class="gift_txt">Find the ideal gift for your loved ones.</p>
-    <div class="navbar-menu gift_btn">
-      <p>Choose gift</p>
-      <img src="${arrow}" alt="arrow" class="arrow" />
-    </div>
-  </nav>
+        <!-- MENU ICON FOR MOBILE -->
+        <nav class="navbar">
+          <button class="navbar-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <button class="close-button">
+              <span class="close-bar"></span>
+              <span class="close-bar"></span>
+            </button>
+          </button>
+          
+          <p class="navbar-brand">tisso vison</p>
+          <p class="gift_txt nview">Find the ideal gift for your loved ones.</p>
+          <div class="navbar-menu gift_btn nview btn">
+            <p>Choose gift</p>
+            <img src="${arrow}" alt="arrow" class="arrow" />
+          </div>
+          </nav>
+          <div class="overlay">
+            <p class="gift_txt">Find the ideal gift for your loved ones.</p>
+            <div class="gift_btn btn">
+              <p>Choose gift</p>
+              <img src="${arrow}" alt="arrow" class="arrow" />
+            </div>
+          </div>
+      
+
 
       <!-- ICONS -->
       <div class="icons">
@@ -42,7 +53,7 @@ document.querySelector("#app").innerHTML = `
             <p class="gift-head">the gift guide</p>
             <p class="gift-text">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>
             <p class="mobile-text">Discover Joy: Your Ultimate Holiday Gift Destination.</p>
-            <div class="shop-btn">
+            <div class="shop-btn btn">
               <p class="btn-text">Shop Now</p>
               <img src="${whiteArrow}" alt="vite" class="gift-arrow" />
             </div>
@@ -120,7 +131,7 @@ document.querySelector("#app").innerHTML = `
       </div>
 
       
-      <div class="cart">
+      <div class="cart btn">
         <p>add to cart</p>
         <img src="${whiteArrow}" alt="arrow" class="arrow" />
       </div>
@@ -136,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const firstColor = document.querySelector(".first");
   const secondColor = document.querySelector(".second");
 
-  // Add click event listeners
   firstColor.addEventListener("click", () => {
     firstColor.classList.add("active");
     secondColor.classList.remove("active");
@@ -145,5 +155,35 @@ document.addEventListener("DOMContentLoaded", () => {
   secondColor.addEventListener("click", () => {
     secondColor.classList.add("active");
     firstColor.classList.remove("active");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.querySelector(".navbar-toggle");
+  const closeBtn = document.querySelector(".close-button");
+  const overlay = document.querySelector(".overlay");
+
+  function checkScreenSize() {
+    if (window.innerWidth >= 768) {
+      hamburger.style.display = "none";
+      closeBtn.style.display = "none";
+    } else {
+      hamburger.style.display = "flex";
+      closeBtn.style.display = "none";
+    }
+  }
+  checkScreenSize();
+  window.addEventListener("resize", checkScreenSize);
+
+  hamburger.addEventListener("click", () => {
+    hamburger.style.display = "none";
+    closeBtn.style.display = "block";
+    overlay.classList.toggle("show");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    closeBtn.style.display = "none";
+    hamburger.style.display = "flex";
+    overlay.classList.toggle("show");
   });
 });
