@@ -94,9 +94,9 @@ export function setupModal() {
         document.querySelector(".color-txt2").textContent =
           product.colors[1].name;
         document.querySelector(".color-pr").style.backgroundColor =
-          product.colors[0].code;
+          product.colors[0].name;
         document.querySelector(".color2-pr").style.backgroundColor =
-          product.colors[1].code;
+          product.colors[1].name;
 
         modal.style.display = "flex";
       });
@@ -104,6 +104,7 @@ export function setupModal() {
 
     closeBtn.addEventListener("click", () => {
       modal.style.display = "none";
+      document.getElementById("modal-color").value = "";
     });
 
     modal.addEventListener("click", (event) => {

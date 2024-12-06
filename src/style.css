@@ -614,3 +614,74 @@ select:focus {
   flex-direction: column;
   gap: 10px;
 }
+
+.cart-icon {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cartt {
+  position: relative;
+  cursor: pointer;
+}
+.cart-items {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: red;
+  border-radius: 100%;
+  right: -4px;
+  top: -23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number {
+  font-size: 10px;
+  text-align: center;
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 20%;
+  height: 100%;
+  background: #f5f5f5;
+  box-shadow: -10px 0 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: right 0.5s ease;
+  z-index: 100;
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.clear {
+  cursor: pointer;
+  text-decoration: underline;
+}

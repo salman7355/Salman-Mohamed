@@ -18,7 +18,7 @@ document.querySelector("#app").innerHTML = `
     <div class="banner">
         <!-- MENU ICON FOR MOBILE -->
         <nav class="navbar">
-          <button class="navbar-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+          <button class="navbar-toggle" aria-label="Toggle menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -74,7 +74,14 @@ document.querySelector("#app").innerHTML = `
 
     <!-- PRODUCT GRID -->
     <div class="products">
-    <p class="head">Tisso Vison in the Wild</p>
+    <div class="cart-icon">
+      <p class="head">Tisso Vison in the Wild</p>
+      <i class="fa-2xl fa-solid fa-cart-shopping cartt" id="cart-icon">
+        <div class="cart-items" >
+        <p class="number" id="cart-number">1</p>
+        </div>
+      </i>
+    </div>
     <div class="items">
       ${[img1, img2, img3, img4, img5, img6]
         .map(
@@ -137,7 +144,17 @@ document.querySelector("#app").innerHTML = `
       </div>
   </div>
 
-</div>
+
+  </div>
+  <div class="cart-overlay">
+    <div class="cart-header">
+    <h1>Cart</h1>
+    <p class="clear" id="clear-cart">
+        Clear all
+    </p>
+    </div>
+    <div id="cart-items-container"></div>
+  </div>
 
 
 `;
@@ -146,6 +163,11 @@ setupModal();
 document.addEventListener("DOMContentLoaded", () => {
   const firstColor = document.querySelector(".first");
   const secondColor = document.querySelector(".second");
+  const cartOverlay = document.querySelector(".cart-overlay");
+  const cartItemsContainer = document.getElementById("cart-items-container");
+  const clearCartBtn = document.getElementById("clear-cart");
+
+  clearCartBtn.addEventListener("click", clearCart);
 
   firstColor.addEventListener("click", () => {
     firstColor.classList.add("active");
@@ -156,6 +178,125 @@ document.addEventListener("DOMContentLoaded", () => {
     secondColor.classList.add("active");
     firstColor.classList.remove("active");
   });
+
+  document.querySelector(".cart.btn").addEventListener("click", () => {
+    const modalImage = document.getElementById("modal-image").src;
+    const title = document.querySelector(".modal-title").textContent;
+    const price = document.querySelector(".modal-price").textContent;
+    const description =
+      document.querySelector(".modal-description").textContent;
+
+    // console.log(colorName[0].innerText);
+
+    let selectedColor = null;
+    let color = null;
+    if (firstColor.classList.contains("active")) {
+      // selectedColor = window.getComputedStyle(
+      //   document.querySelector(".color-pr")
+      // ).backgroundColor;
+      color = document.querySelectorAll(".color-txt1");
+      selectedColor = color[0].innerText;
+    } else if (secondColor.classList.contains("active")) {
+      // selectedColor = window.getComputedStyle(
+      //   document.querySelector(".color2-pr")
+      // ).backgroundColor;
+      color = document.querySelectorAll(".color-txt2");
+      selectedColor = color[0].innerText;
+    }
+
+    const selectedSize = document.getElementById("modal-color").value;
+    if (!selectedSize) {
+      alert("Please select a size before adding to cart.");
+      return;
+    }
+
+    const selectedProduct = {
+      image: modalImage,
+      title,
+      price,
+      description,
+      color: selectedColor,
+      size: selectedSize,
+    };
+
+    console.log("Selected Product:", selectedProduct);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(selectedProduct);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    document.getElementById("modal").style.display = "none";
+    window.location.reload();
+  });
+
+  const cartIcon = document.getElementById("cart-icon");
+  const cartNumber = document.getElementById("cart-number");
+
+  cartIcon.addEventListener("click", () => {
+    cartOverlay.style.right = 0;
+    loadCartItems();
+  });
+
+  function loadCartItems() {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log("Cart Items:", cartItems);
+
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+      return;
+    }
+
+    const itemsHTML = cartItems
+      .map((item) => {
+        return `
+          <div class="modal-row">
+          <img id="modal-image" src="${
+            item.image
+          }" alt="Product Image" class="modal-image" />
+          <div class="item-desc">
+            <p class="modal-title">${item.title}</p>
+            <p class="modal-price">${item.price}</p>
+            <p class="modal-description">${item.description}</p>
+          </div>
+        </div>
+        <div class="item-details">
+          <div class="c">
+            <p>Color: </p>
+            <p>${item.color || "N/A"}</p>
+          </div>
+          <div class="c">
+            <p>Size: </p>
+            <p>${item.size || "N/A"}</p>
+          </div>
+        </div>
+        `;
+      })
+      .join("");
+
+    cartItemsContainer.innerHTML = itemsHTML;
+  }
+
+  document.addEventListener("click", (event) => {
+    if (
+      !cartOverlay.contains(event.target) &&
+      !cartIcon.contains(event.target)
+    ) {
+      cartOverlay.style.right = "-100%";
+    }
+  });
+
+  const updateCart = () => {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const itemCount = cartItems.length;
+
+    if (itemCount > 0) {
+      cartIcon.style.display = "block";
+      cartNumber.textContent = itemCount;
+    } else {
+      cartIcon.style.display = "none";
+    }
+  };
+
+  updateCart();
+  window.addEventListener("storage", updateCart);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -187,3 +328,8 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.classList.toggle("show");
   });
 });
+
+const clearCart = () => {
+  localStorage.removeItem("cart");
+  window.location.reload();
+};
