@@ -1,15 +1,15 @@
 import "./style.css";
-import arrow from "../public/arrow.png";
-import whiteArrow from "../public/whiteArrow.png";
-import img1 from "../public/img1.png";
-import img2 from "../public/img2.png";
-import img3 from "../public/img3.png";
-import img4 from "../public/img4.png";
-import img5 from "../public/img5.png";
-import img6 from "../public/img6.png";
-import icons1 from "../public/icons.png";
-import mobileImage from "../public/mobile-Frame.png";
-import icons2 from "../public/icons2.png";
+import arrow from "./arrow.png";
+import whiteArrow from "./whiteArrow.png";
+import img1 from "./img1.png";
+import img2 from "./img2.png";
+import img3 from "./img3.png";
+import img4 from "./img4.png";
+import img5 from "./img5.png";
+import img6 from "./img6.png";
+import icons1 from "./icons.png";
+import mobileImage from "./mobile-Frame.png";
+import icons2 from "./icons2.png";
 import { setupModal } from "./Modal.js";
 
 document.querySelector("#app").innerHTML = `

@@ -1,9 +1,9 @@
-import img1 from "../public/img1.png";
-import img2 from "../public/img2.png";
-import img3 from "../public/img3.png";
-import img4 from "../public/img4.png";
-import img5 from "../public/img5.png";
-import img6 from "../public/img6.png";
+import img1 from "./img1.png";
+import img2 from "./img2.png";
+import img3 from "./img3.png";
+import img4 from "./img4.png";
+import img5 from "./img5.png";
+import img6 from "./img6.png";
 
 export function setupModal() {
   document.addEventListener("DOMContentLoaded", () => {
