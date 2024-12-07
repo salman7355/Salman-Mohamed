@@ -160,6 +160,8 @@ document.querySelector("#app").innerHTML = `
 `;
 
 setupModal();
+console.log("main.js is loaded");
+
 document.addEventListener("DOMContentLoaded", () => {
   const firstColor = document.querySelector(".first");
   const secondColor = document.querySelector(".second");
